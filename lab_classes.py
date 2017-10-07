@@ -3,7 +3,7 @@ import requests
 import json
 import datetime
 
-class VK_User(BaseClient):
+class VkUser(BaseClient):
     def __init__(self, username):
         self.name = username
 
@@ -25,7 +25,7 @@ class VK_User(BaseClient):
             raise Exception('There\'s no such user')
 
 
-class VK_Friends(BaseClient):
+class VkFriends(BaseClient):
     def __init__(self, user_id):
         self.id = user_id
 
@@ -41,19 +41,14 @@ class VK_Friends(BaseClient):
 
     def response_handler(self, response):
         js = json.loads(response.text)
-        try:
-            dates = []
-            for friend in js['response']:
-                try:
-                    dates.append(datetime.datetime.strptime(friend['bdate'],"%d.%m.%Y").date())
-                except:
-                    pass
-
-            ages = [int((datetime.date.today()-date).days/365.2425) for date in dates]
-            return ages
-
-        except KeyError:
-            return KeyError(js)
+        dates = []
+        for friend in js['response']:
+            try:
+                dates.append(datetime.datetime.strptime(friend['bdate'],"%d.%m.%Y").date())
+            except:
+                pass
+        ages = [int((datetime.date.today()-date).days/365.2425) for date in dates]
+        return ages
 
 
 

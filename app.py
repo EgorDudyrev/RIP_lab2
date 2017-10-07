@@ -1,19 +1,19 @@
 from lab_classes import *
 from matplotlib import pylab
 
-#user_id = VK_User('56337756').execute()
+#user_id = VkUser('56337756').execute()
 name = input('Type username or id: ')
 print()
 user_id = None
 try:
-    user_id = VK_User(name).execute()
+    user_id = VkUser(name).execute()
 except Exception as e:
     print(e)
     quit(1)
 
 ages= None
 try:
-    ages = VK_Friends(user_id).execute()
+    ages = VkFriends(user_id).execute()
 except Exception as e:
     print(e)
     quit(1)
